@@ -11,13 +11,16 @@ public class Flesh : MonoBehaviour, IHP
         set { maxHP = value; }
         get { return maxHP; }
     }
-    public float HP {  get; set; }
+    public float HP { get; set; }
     public float Speed;
     public float ATK;
     public float viewingRange;
+    public float Damage;
     public float attackRange;
     public float attackSpeed;
     private GameObject Player;
+    GameObject[] gameObjectArray;
+    public bool allowAttack;
     private void Awake()
     {
         EventManager.OnTakeDamage.AddListener(TakeDamage);
@@ -32,15 +35,36 @@ public class Flesh : MonoBehaviour, IHP
     void Start()
     {
         HP = MaxHP;
+        gameObjectArray = GameObject.FindGameObjectsWithTag("Player");
     }
-
+    public void Attack(GameObject smth)
+    {
+        if (smth != null)
+        {
+            if (allowAttack == true)
+            {
+                StartCoroutine(Attacking(smth));
+            }
+        }
+    }
+    IEnumerator Attacking(GameObject enemy)
+    {
+        allowAttack = false;
+        MakeDamage(enemy, Damage);
+        yield return new WaitForSeconds(1 / attackSpeed);
+        allowAttack = true;
+    }
+    private void MakeDamage(GameObject enemy, float damage)
+    {
+        EventManager.SendTakeDamage(enemy, damage);
+    }
     void FixedUpdate()
     {
         if (HP <= 0)
         {
             Death();
         }
-        GameObject[] gameObjectArray = GameObject.FindGameObjectsWithTag("Player");
+        gameObjectArray = GameObject.FindGameObjectsWithTag("Player");
         if (gameObjectArray.Length > 0)
         {
             Player = FindClosestGameObjectFromArray(gameObjectArray);
@@ -49,9 +73,16 @@ public class Flesh : MonoBehaviour, IHP
         {
             Player = null;
         }
-        if (Vector2.Distance(gameObject.transform.position, Player.transform.position) <= viewingRange)
+        if (Player is not null)
         {
-            Chase(Player);
+            if (Vector2.Distance(gameObject.transform.position, Player.transform.position) <= viewingRange)
+            {
+                Chase(Player);
+            }
+            if (Vector2.Distance(gameObject.transform.position, Player.transform.position) <= attackRange)
+            {
+                Attack(Player);
+            }
         }
     }
     void Chase(GameObject smth)
@@ -82,10 +113,5 @@ public class Flesh : MonoBehaviour, IHP
     void Death()
     {
         Destroy(gameObject);
-        SpawnLoot();
-    }
-    void SpawnLoot()
-    {
-
     }
 }

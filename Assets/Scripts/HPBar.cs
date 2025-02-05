@@ -14,7 +14,6 @@ public class HPBar : MonoBehaviour
     void Update()
     {
         IHP comp = Smbd.GetComponent(typeof(IHP)) as IHP;
-        Debug.Log(comp.HP);
         _healthBarFilling.fillAmount=comp.HP/comp.MaxHP;
     }
 }

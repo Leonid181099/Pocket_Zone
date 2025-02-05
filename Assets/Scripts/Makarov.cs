@@ -3,23 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class Makarov : MonoBehaviour, IGun
+public class Makarov : MonoBehaviour, IGun, IAmmo
 {
     public GameObject Player;
-    public int Ammo;
+    public int ammo;
+    public int Ammo
+    {
+        set { ammo = value; }
+        get { return ammo; }
+    }
     public float Damage;
     public float RateOfFire;
     public bool allowFire;
+    public float Range;
     void Start()
     {
         Player = transform.parent.gameObject;
     }
     public void Shoot()
     {
-        float dist = 6f;
         if (Ammo > 0)
         {
-            var ememyDist = FindClosestEnemy(Player, dist);
+            var ememyDist = FindClosestEnemy(Player, Range);
             if (ememyDist.Item1 != null)
             {
                 if (allowFire == true)

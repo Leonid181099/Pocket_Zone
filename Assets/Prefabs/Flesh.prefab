@@ -96,11 +96,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 50
-  Speed: 10
+  Speed: 5
   ATK: 15
   viewingRange: 10
+  Damage: 5
   attackRange: 1
   attackSpeed: 2
+  allowAttack: 1
 --- !u!1 &6109315575485957901
 GameObject:
   m_ObjectHideFlags: 0

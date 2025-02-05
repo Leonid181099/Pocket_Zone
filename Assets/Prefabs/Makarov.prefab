@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -6788643489917992457}
   m_Layer: 0
   m_Name: Makarov
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45,7 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 0}
-  Ammo: 8
+  ammo: 8
   Damage: 30
   RateOfFire: 2
   allowFire: 1
+  Range: 6

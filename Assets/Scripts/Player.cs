@@ -16,8 +16,23 @@ public class Player : MonoBehaviour,IHP
     public FixedJoystick fixedJoystick;
     public GameObject Makarov;
     private GameObject gun;
+    private void Awake()
+    {
+        EventManager.OnTakeDamage.AddListener(TakeDamage);
+    }
+    private void TakeDamage(GameObject enemy, float damage)
+    {
+        if (gameObject == enemy)
+        {
+            HP = Math.Max(0f, HP - damage);
+        }
+    }
     public void FixedUpdate()
     {
+        if (HP <= 0)
+        {
+            Death();
+        }
         transform.Translate(Vector2.up * Time.fixedDeltaTime * speed * fixedJoystick.Vertical+Vector2.right * Time.fixedDeltaTime * speed * fixedJoystick.Horizontal);
     }
     void Start()
@@ -28,7 +43,13 @@ public class Player : MonoBehaviour,IHP
     }
     public void Shoot()
     {
-        Makarov comp = gun.GetComponent(typeof(Makarov)) as Makarov;
+        IGun comp = gun.GetComponent(typeof(IGun)) as IGun;
         comp.Shoot();
+    }
+    void Death()
+    {
+        GameObject camera = gameObject.transform.Find("Main Camera").gameObject;
+        camera.transform.SetParent(null);
+        Destroy(gameObject);
     }
 }
