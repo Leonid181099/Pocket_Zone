@@ -125,6 +125,8 @@ public class Flesh : MonoBehaviour, IHP
             GameObject loot = Instantiate(lootType, transform);
             loot.transform.SetParent(null);
             loot.tag = "Loot";
+            loot.transform.Find("Pic").gameObject.SetActive(true);
+            loot.transform.Find("Pic").localScale = new Vector3(5f, 5f, 1f);
         }
     }
 }

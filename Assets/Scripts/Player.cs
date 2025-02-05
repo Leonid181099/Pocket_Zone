@@ -42,6 +42,10 @@ public class Player : MonoBehaviour,IHP
         HP = MaxHP;
         gun= Instantiate(Makarov,transform);
         gun.tag = "Weapon";
+        gun.transform.Find("Pic").gameObject.SetActive(true);
+        gun.transform.Find("Pic").localScale = new Vector3(10f, 10f, 1f);
+        //gun.transform.Find("Canvas").gameObject.SetActive(true);
+        //gun.transform.Find("Canvas").GetComponent<Canvas>().worldCamera = gameObject.transform.Find("Main Camera").GetComponent<Camera>();
     }
     public void Shoot()
     {
