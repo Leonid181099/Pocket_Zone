@@ -1,18 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HPBar : MonoBehaviour
 {
-    // Start is called before the first frame update
+    GameObject Smbd;
+    [SerializeField] private Image _healthBarFilling;
     void Start()
     {
-        
+        Smbd= transform.parent.gameObject.transform.parent.gameObject;
     }
-
-    // Update is called once per frame
     void Update()
     {
-        
+        IHP comp = Smbd.GetComponent(typeof(IHP)) as IHP;
+        Debug.Log(comp.HP);
+        _healthBarFilling.fillAmount=comp.HP/comp.MaxHP;
     }
 }

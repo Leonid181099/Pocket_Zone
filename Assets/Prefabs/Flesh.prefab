@@ -28,7 +28,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4451344606073608589}
+  - {fileID: 439835362651855109}
   m_Father: {fileID: 8183472205873157217}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -95,7 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27bf9e0a87f50dd4bbda110b24ccbd48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHP: 50
+  maxHP: 50
   Speed: 10
   ATK: 15
   viewingRange: 10
@@ -185,7 +185,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1001 &4809705546701450782
+--- !u!1001 &8746905327708352150
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -242,8 +242,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e27b72faa2743494089ab3c2714fc99c, type: 3}
---- !u!4 &4451344606073608589 stripped
+--- !u!4 &439835362651855109 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9185614687172294547, guid: e27b72faa2743494089ab3c2714fc99c, type: 3}
-  m_PrefabInstance: {fileID: 4809705546701450782}
+  m_PrefabInstance: {fileID: 8746905327708352150}
   m_PrefabAsset: {fileID: 0}

@@ -1,11 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public class Flesh : MonoBehaviour
+public class Flesh : MonoBehaviour, IHP
 {
-    public float MaxHP;
-    private float HP;
+    public float maxHP;
+    public float MaxHP
+    {
+        set { maxHP = value; }
+        get { return maxHP; }
+    }
+    public float HP {  get; set; }
     public float Speed;
     public float ATK;
     public float viewingRange;
@@ -20,13 +26,14 @@ public class Flesh : MonoBehaviour
     {
         if (gameObject == enemy)
         {
-            HP -= damage;
+            HP = Math.Max(0f, HP - damage);
         }
     }
     void Start()
     {
         HP = MaxHP;
     }
+
     void FixedUpdate()
     {
         if (HP <= 0)

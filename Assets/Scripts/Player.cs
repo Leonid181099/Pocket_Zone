@@ -3,9 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour,IHP
 {
     public float speed;
+    public float maxHP;
+    public float MaxHP
+    {
+        set {maxHP = value;}
+        get { return maxHP; }
+    }
+    public float HP { get; set; }
     public FixedJoystick fixedJoystick;
     public GameObject Makarov;
     private GameObject gun;
@@ -16,6 +23,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         //gun= new Makarov(gameObject);
+        HP = MaxHP;
         gun= Instantiate(Makarov,transform);
     }
     public void Shoot()
