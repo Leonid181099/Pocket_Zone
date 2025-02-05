@@ -75,7 +75,8 @@ public class Zombie : MonoBehaviour,IHP
         }
         if (Player is not null)
         {
-            if (Vector2.Distance(gameObject.transform.position, Player.transform.position) <= viewingRange)
+            if (Vector2.Distance(gameObject.transform.position, Player.transform.position) <= viewingRange &&
+                Vector2.Distance(gameObject.transform.position, Player.transform.position) >= attackRange/2)
             {
                 Chase(Player);
             }
@@ -112,6 +113,18 @@ public class Zombie : MonoBehaviour,IHP
     }
     void Death()
     {
+        DropLoot();
         Destroy(gameObject);
+    }
+    [SerializeField] private GameObject[] lootPrefabs;
+    void DropLoot()
+    {
+        if (lootPrefabs.Length > 0)
+        {
+            GameObject lootType = lootPrefabs[UnityEngine.Random.Range(0, lootPrefabs.Length)];
+            GameObject loot = Instantiate(lootType, transform);
+            loot.transform.SetParent(null);
+            loot.tag = "Loot";
+        }
     }
 }

@@ -103,6 +103,11 @@ MonoBehaviour:
   attackRange: 1
   attackSpeed: 2
   allowAttack: 1
+  lootPrefabs:
+  - {fileID: 5317902094453692818, guid: c797fb3e56ad4b445b6c36ba6005ac35, type: 3}
+  - {fileID: 9112618477931435818, guid: 29b647d7d4ff2f445b7a6dc247c86933, type: 3}
+  - {fileID: 8164031561551395985, guid: 6fe393bd35540f84c89425be8662db02, type: 3}
+  - {fileID: 3228774396840265231, guid: 19298499c5712c943a78d048f2e42cc1, type: 3}
 --- !u!1 &6109315575485957901
 GameObject:
   m_ObjectHideFlags: 0

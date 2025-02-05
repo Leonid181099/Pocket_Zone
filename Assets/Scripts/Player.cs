@@ -33,6 +33,7 @@ public class Player : MonoBehaviour,IHP
         {
             Death();
         }
+        PickUpLoot();
         transform.Translate(Vector2.up * Time.fixedDeltaTime * speed * fixedJoystick.Vertical+Vector2.right * Time.fixedDeltaTime * speed * fixedJoystick.Horizontal);
     }
     void Start()
@@ -40,6 +41,7 @@ public class Player : MonoBehaviour,IHP
         //gun= new Makarov(gameObject);
         HP = MaxHP;
         gun= Instantiate(Makarov,transform);
+        gun.tag = "Weapon";
     }
     public void Shoot()
     {
@@ -51,5 +53,9 @@ public class Player : MonoBehaviour,IHP
         GameObject camera = gameObject.transform.Find("Main Camera").gameObject;
         camera.transform.SetParent(null);
         Destroy(gameObject);
+    }
+    void PickUpLoot()
+    {
+
     }
 }

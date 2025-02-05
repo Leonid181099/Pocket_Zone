@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class Makarov : MonoBehaviour, IGun, IAmmo
+public class AK_74 : MonoBehaviour, IGun, IAmmo
 {
     public GameObject Player;
     public int ammo;
