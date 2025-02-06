@@ -7,9 +7,10 @@ using TMPro;
 public class InventorySlot:MonoBehaviour
 {
     //GameObject item;
-    string itemId="";
-    int amount=0;
-    GameObject Pic=null;
+    public string itemId="";
+    public int amount=0;
+    public GameObject Pic=null;
+    public Sprite slotSprite=null;
     public bool put(GameObject Item)
     {
         Id comp = Item.GetComponent(typeof(Id)) as Id;
@@ -23,6 +24,7 @@ public class InventorySlot:MonoBehaviour
             //PicObject=Instantiate(Pic,transform);
             Image image=gameObject.GetComponent<Image>();
             image.sprite = Pic.GetComponent<SpriteRenderer>().sprite;
+            slotSprite=image.sprite;
             Destroy(Item);
             return true;
         }
@@ -48,9 +50,38 @@ public class InventorySlot:MonoBehaviour
         if (amount == 0)
         {
             Image image = gameObject.GetComponent<Image>();
-            image.sprite = SquareSlotPrefab.GetComponent<Image>().sprite;
+            slotSprite = SquareSlotPrefab.GetComponent<Image>().sprite;
+            image.sprite = slotSprite;
             itemId = "";
             transform.Find("Button(Clone)").gameObject.SetActive(false);
+            transform.Find("Button(Clone)").Find("Button 1(Clone)").gameObject.SetActive(false);
+        }
+    }
+    public void update(GameObject SquareSlotPrefab)
+    {
+        if (amount == 0)
+        {
+            Image image = gameObject.GetComponent<Image>();
+            slotSprite = SquareSlotPrefab.GetComponent<Image>().sprite;
+            image.sprite = slotSprite;
+            itemId = "";
+            transform.Find("Button(Clone)").gameObject.SetActive(false);
+            transform.Find("Button(Clone)").Find("Button 1(Clone)").gameObject.SetActive(false);
+        }
+        if (amount == 1)
+        {
+            Image image = gameObject.GetComponent<Image>();
+            image.sprite = slotSprite;
+            transform.Find("Text (TMP)").gameObject.GetComponent<TMP_Text>().text = "";
+            transform.Find("Button(Clone)").gameObject.SetActive(true);
+            transform.Find("Button(Clone)").Find("Button 1(Clone)").gameObject.SetActive(false);
+        }
+        if (amount > 1)
+        {
+            Image image = gameObject.GetComponent<Image>();
+            image.sprite = slotSprite;
+            transform.Find("Text (TMP)").gameObject.GetComponent<TMP_Text>().text = amount.ToString();
+            transform.Find("Button(Clone)").gameObject.SetActive(true);
             transform.Find("Button(Clone)").Find("Button 1(Clone)").gameObject.SetActive(false);
         }
     }

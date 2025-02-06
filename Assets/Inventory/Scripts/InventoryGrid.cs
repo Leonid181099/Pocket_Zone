@@ -2,6 +2,42 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
+
+[System.Serializable]
+public class InventorySlotData
+{
+    public string itemId;
+    public int amount;
+    public string picPath; // Путь к изображению (если необходимо)
+
+    public InventorySlotData(InventorySlot slot)
+    {
+        itemId = slot.itemId;
+        amount = slot.amount;
+        picPath = slot.slotSprite != null ? slot.slotSprite.name : ""; // или путь, если используется другой подход для хранения изображений
+    }
+}
+
+[System.Serializable]
+public class InventoryGridData
+{
+    public List<InventorySlotData> slotDataList; // Одномерный список
+
+    // Конструктор для создания данных из Grid
+    public InventoryGridData(GameObject[,] grid, int X, int Y)
+    {
+        slotDataList = new List<InventorySlotData>();
+        for (int i = 0; i < X; i++)
+        {
+            for (int j = 0; j < Y; j++)
+            {
+                InventorySlotData slotData = new InventorySlotData(grid[i, j].GetComponent<InventorySlot>());
+                slotDataList.Add(slotData); // Добавляем слот в список
+            }
+        }
+    }
+}
 
 public class InventoryGrid : MonoBehaviour
 {
@@ -56,7 +92,79 @@ public class InventoryGrid : MonoBehaviour
                 Button1.transform.localPosition += new Vector3(Width, 0, 0);
             }
         }
+        LoadGrid();
     }
+
+    // Метод для сериализации и сохранения данных
+    public void SaveGrid()
+    {
+        string path = Path.Combine(Application.persistentDataPath, "inventoryGrid.json");
+        InventoryGridData gridData = new InventoryGridData(Grid, X, Y); // Создаём данные для инвентаря
+        string json = JsonUtility.ToJson(gridData, true); // Сериализация в JSON
+        File.WriteAllText(path, json); // Сохраняем в файл
+        Debug.Log($"Данные инвентаря сохранены по пути: {path}");
+    }
+
+    // Метод для загрузки данных
+    public void LoadGrid()
+    {
+        string path = Path.Combine(Application.persistentDataPath, "inventoryGrid.json");
+
+        if (File.Exists(path))
+        {
+            string json = File.ReadAllText(path);
+            InventoryGridData gridData = JsonUtility.FromJson<InventoryGridData>(json);
+
+            if (gridData != null && gridData.slotDataList != null)
+            {
+                int index = 0;
+                for (int i = 0; i < X; i++)
+                {
+                    for (int j = 0; j < Y; j++)
+                    {
+                        if (index < gridData.slotDataList.Count)
+                        {
+                            InventorySlotData data = gridData.slotDataList[index];
+                            InventorySlot slot = Grid[i, j].GetComponent<InventorySlot>();
+
+                            if (slot != null)
+                            {
+                                Debug.Log($"Загружены данные: itemId = {data.itemId}, amount = {data.amount}");
+                                slot.itemId = data.itemId;
+                                slot.amount = data.amount;
+                                // Если вам нужно восстановить изображение, используйте данные о пути к спрайту (или замените свой подход)
+                                if (!string.IsNullOrEmpty(data.picPath))
+                                {
+                                    // Восстановление изображения
+                                    // Пример: загрузить спрайт по имени или пути
+                                    Sprite sprite = Resources.Load<Sprite>("Images/"+data.picPath);
+                                    if (sprite != null)
+                                    {
+                                        slot.slotSprite = sprite;
+                                    }
+                                }
+                                slot.update(SquareSlotPrefab);
+                            }
+                            else
+                            {
+                                Debug.LogWarning($"Компонент InventorySlot не найден на позиции ({i}, {j})");
+                            }
+                        }
+                        index++;
+                    }
+                }
+            }
+            else
+            {
+                Debug.LogWarning("gridData или slotDataList равны null.");
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"Файл не найден: {path}");
+        }
+    }
+
 
     // Update is called once per frame
     void Update()
@@ -66,6 +174,7 @@ public class InventoryGrid : MonoBehaviour
         {
             put(gameObjectArray[i]);
         }
+        SaveGrid();
     }
     void put(GameObject Item)
     {
