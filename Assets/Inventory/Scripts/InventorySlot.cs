@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class InventorySlot:MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class InventorySlot:MonoBehaviour
         string ItemId = comp.id;
         if (amount == 0)
         {
+            transform.Find("Button(Clone)").gameObject.SetActive(true);
             itemId = ItemId;
             amount = 1;
             Pic = Item.transform.Find("Pic").gameObject;
@@ -29,6 +31,7 @@ public class InventorySlot:MonoBehaviour
             if (itemId == ItemId)
             {
                 amount ++;
+                transform.Find("Text (TMP)").gameObject.GetComponent<TMP_Text>().text=amount.ToString();
                 Destroy(Item);
                 return true;
             }
@@ -38,11 +41,17 @@ public class InventorySlot:MonoBehaviour
     public void delete(GameObject SquareSlotPrefab)
     {
         amount--;
+        if (amount > 1)
+            transform.Find("Text (TMP)").gameObject.GetComponent<TMP_Text>().text = amount.ToString();
+        if (amount<=1)
+            transform.Find("Text (TMP)").gameObject.GetComponent<TMP_Text>().text = "";
         if (amount == 0)
         {
             Image image = gameObject.GetComponent<Image>();
             image.sprite = SquareSlotPrefab.GetComponent<Image>().sprite;
             itemId = "";
+            transform.Find("Button(Clone)").gameObject.SetActive(false);
+            transform.Find("Button(Clone)").Find("Button 1(Clone)").gameObject.SetActive(false);
         }
     }
 }

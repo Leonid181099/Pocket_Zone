@@ -14,6 +14,8 @@ public class InventoryGrid : MonoBehaviour
     public int Ygap;
     public GameObject SquarePrefab;
     public GameObject SquareSlotPrefab;
+    public GameObject ButtonPrefab;
+    public GameObject Button1Prefab;
     private GameObject Inventory;
     // Start is called before the first frame update
     void Start()
@@ -30,6 +32,8 @@ public class InventoryGrid : MonoBehaviour
         Grid = new GameObject[X, Y];
         int Xcoord;
         int Ycoord;
+        GameObject Button;
+        GameObject Button1;
         for (int i = 0; i < X; i++)
         {
             for (int j = 0; j < Y; j++)
@@ -41,6 +45,15 @@ public class InventoryGrid : MonoBehaviour
                 GridRT.sizeDelta = new Vector2(Width, Height);
                 Grid[i, j].transform.localPosition += new Vector3(Xcoord, -Ycoord,0);
                 Grid[i, j].transform.GetComponent<Image>().preserveAspect = true;
+                Button=Instantiate(ButtonPrefab, Grid[i, j].transform);
+                Button.SetActive(false);
+                RectTransform ButtonRT = Button.transform.GetComponent<RectTransform>();
+                ButtonRT.sizeDelta= new Vector2(Width, Height);
+                Button1 =Instantiate(Button1Prefab, Button.transform);
+                Button1.SetActive(false);
+                RectTransform Button1RT = Button1.transform.GetComponent<RectTransform>();
+                Button1RT.sizeDelta = new Vector2(Width, Height);
+                Button1.transform.localPosition += new Vector3(Width, 0, 0);
             }
         }
     }
@@ -72,9 +85,9 @@ public class InventoryGrid : MonoBehaviour
                 break;
         }
     }
-    void delete(GameObject GridIJ)
+    public void delete(GameObject GridIJ)
     {
         InventorySlot comp = GridIJ.GetComponent(typeof(InventorySlot)) as InventorySlot;
-        comp.delete(SquareSlotPrefab);
+        comp.delete(SquareSlotPrefab);  
     }
 }

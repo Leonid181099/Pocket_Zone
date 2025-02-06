@@ -53,6 +53,8 @@ MonoBehaviour:
   Ygap: 10
   SquarePrefab: {fileID: 2075421574708402179, guid: 44a144d2d9040bd41a9b200f799066e6, type: 3}
   SquareSlotPrefab: {fileID: 2075421574708402179, guid: b6b5a2d3cc4dd034bbf045d85192bec0, type: 3}
+  ButtonPrefab: {fileID: 8904325351322511794, guid: 01d61c02339739b40b14f98d80825f32, type: 3}
+  Button1Prefab: {fileID: 8904325351322511794, guid: 31722337d7d7a52409365ae898f19948, type: 3}
 --- !u!1 &638164330013184269
 GameObject:
   m_ObjectHideFlags: 0
